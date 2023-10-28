@@ -23,52 +23,70 @@ ArrayList<Company> result = null;
 		
 	}
 %>
-<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Nombre Compañia</th>
-						<th scope="col">N empleados</th>
-						<th scope="col">Nombre empleados</th>
-						<th scope="col">Projectos</th>
-					</tr>
-				</thead>
-				<tbody>
-					<%
-					
+<%
+	for (Company c : result){
+%>
+<table border="1px">
 
-						for (Company c : result) {
-					%>
-					<tr>
-						<th scope="row"></th> <!-- Acumulamos para indicar el numero de personajes -->
-						<td><%=c.getName()%></td>
-						<td><%=c.getEmployee().size()%></td>
-						<td>
-							<table>
-							<thead>
-					<tr>
-						<th >Nombre EMpleado</th>
-						
-					</tr>
-				</thead>
-							<tbody>
-							<%
-								for (Employee e : c.getEmployee()){
-							%>
-							<tr>
-								<td><%=e.getFirstName() %></td>
-							</tr>
-							
-							
-							<%
-								}
-							%>
-							</tbody>
-							</table>
-						</td>
-					</tr>
-					<%} %>
-				</tbody>
-			</table>
+	<tr>
+		<td>
+		 <b>Nombre Compañia</b>	
+		</td>
+		<td>
+			<b>Num Empleados</b>
+		</td>
+		<td>
+			<b>Num proyectos</b>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<%=c.getName() %>
+		</td>
+		<td>
+			<%=c.getEmployee().size() %>
+		</td>
+		<td>
+			<%=c.getCompanyProject().size() %>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="3">
+			<b>Empleados</b>
+		</td>
+	</tr>
+	
+		<%
+		for (Employee e : c.getEmployee()){
+		%>
+		<tr >
+		<td colspan="3">
+			Empleado: <%=e.getFirstName()%> <%=e.getLastName() %>
+		</td>
+		</tr>
+		<%
+		}
+		%>
+	
+	<tr>
+		<td colspan="3">
+			<b>Proyectos</b>
+		</td>
+	</tr>
+	<%
+				for(CompanyProject compP: c.getCompanyProject()){
+			%>
+	<tr>
+		<td colspan="3">
+			
+			<%= compP.getProject().getName() %>
+		</td>
+	</tr>
+	<%} %>
+</table>
+	<%
+	}
+	%>
+
 </body>
 </html>

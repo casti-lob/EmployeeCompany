@@ -3,9 +3,9 @@ package es.jacaranda.repository;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import es.jacaranda.utility.DbUtility;
-import jakarta.transaction.Transaction;
 
 public class DbRepository {
 
@@ -46,5 +46,26 @@ public class DbRepository {
 			throw new Exception("Error al obtener la entidad");
 		}
 		return result;
+	}
+	
+	public static <E> E add(Class <E>c, Object element) throws Exception {
+		Transaction transaction = null;
+		Class <E> result= null;
+		Session session = null;
+		try {
+			session = DbUtility.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		try {
+			result= (Class<E>) session.merge(element);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		session.close();
+		return (E) result;
+		
 	}
 }

@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -12,17 +14,41 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "employee")
 public class Employee {
-	@Id
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	
 	private int id;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String gender;
-	private Date dateOfBirth;
+	private String dateOfBirth;
 	@ManyToOne
 	@JoinColumn(name="idCompany")
 	private Company company;
 	
+	public Employee(int id, String firstName, String lastName, String email, String gender, String dateOfBirth,
+			Company company) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.company = company;
+	}
+	
+	public Employee(String firstName, String lastName, String email, String gender, String dateOfBirth,
+			Company company) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.company = company;
+	}
+
 	public Employee() {
 		super();
 	}
@@ -67,11 +93,11 @@ public class Employee {
 		this.gender = gender;
 	}
 
-	public Date getDateOfBirth() {
+	public String getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(Date dateOfBirth) {
+	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
