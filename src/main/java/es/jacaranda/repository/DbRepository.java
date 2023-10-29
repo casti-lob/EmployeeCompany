@@ -50,7 +50,7 @@ public class DbRepository {
 	
 	public static <E> E add(Class <E>c, Object element) throws Exception {
 		Transaction transaction = null;
-		Class <E> result= null;
+		E result= null;
 		Session session = null;
 		try {
 			session = DbUtility.getSessionFactory().openSession();
@@ -59,7 +59,7 @@ public class DbRepository {
 			throw new Exception("Error en la base de datos");
 		}
 		try {
-			result= (Class<E>) session.merge(element);
+			result=  (E) session.merge(element);
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
