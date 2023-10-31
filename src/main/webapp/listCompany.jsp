@@ -60,8 +60,11 @@ ArrayList<Company> result = null;
 		for (Employee e : c.getEmployee()){
 		%>
 		<tr >
-		<td colspan="3">
+		<td colspan="2">
 			Empleado: <%=e.getFirstName()%> <%=e.getLastName() %>
+		</td>
+		<td>
+			<a href="updateEmployee.jsp?idEmployee=<%=e.getId()%>"><button type="button">Editar</button></a>
 		</td>
 		</tr>
 		<%

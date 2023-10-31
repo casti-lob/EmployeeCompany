@@ -21,12 +21,12 @@ public class Employee {
 	private String lastName;
 	private String email;
 	private String gender;
-	private String dateOfBirth;
+	private Date dateOfBirth;
 	@ManyToOne
 	@JoinColumn(name="idCompany")
 	private Company company;
 	
-	public Employee(int id, String firstName, String lastName, String email, String gender, String dateOfBirth,
+	public Employee(int id, String firstName, String lastName, String email, String gender, Date dateOfBirth,
 			Company company) {
 		super();
 		this.id = id;
@@ -38,7 +38,7 @@ public class Employee {
 		this.company = company;
 	}
 	
-	public Employee(String firstName, String lastName, String email, String gender, String dateOfBirth,
+	public Employee(String firstName, String lastName, String email, String gender, Date dateOfBirth,
 			Company company) {
 		super();
 		this.firstName = firstName;
@@ -93,11 +93,11 @@ public class Employee {
 		this.gender = gender;
 	}
 
-	public String getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(String dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 

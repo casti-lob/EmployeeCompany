@@ -1,3 +1,4 @@
+<%@page import="java.sql.Date"%>
 <%@page import="es.jacaranda.model.Employee"%>
 <%@page import="es.jacaranda.repository.DbRepository"%>
 <%@page import="es.jacaranda.model.Company"%>
@@ -17,7 +18,7 @@ if(request.getParameter("add")!=null){
 	String lastName = request.getParameter("lastName");
 	String email = request.getParameter("email");
 	String gender = request.getParameter("gender");
-	String date = request.getParameter("date");
+	Date date = Date.valueOf( request.getParameter("date"));
 	int idCompany = Integer.parseInt(request.getParameter("company"));
 	Company c = DbRepository.find(Company.class, idCompany);
 	Employee e = new Employee(name,lastName,email,gender,date,c);
