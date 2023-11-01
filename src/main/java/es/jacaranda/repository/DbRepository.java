@@ -68,4 +68,25 @@ public class DbRepository {
 		return (E) result;
 		
 	}
+	
+	public static <E> E delete(Class <E>c, Object element) throws Exception {
+		Transaction transaction = null;
+		E result= null;
+		Session session = null;
+		try {
+			session = DbUtility.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		try {
+			session.remove(element);
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		session.close();
+		return  result;
+		
+	}
 }
