@@ -126,4 +126,30 @@ public class DbRepository {
 		return  result;
 		
 	}
+	
+	public static void add(CompanyProject c) throws Exception {
+		Transaction transaction = null;
+		
+		Session session = null;
+		try {
+			session = DbUtility.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		try {
+			if(DbRepository.find(c)==null) {
+				session.persist(c);
+			}else {
+				 session.merge(c);//persist para companyProject
+			}
+			
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		session.close();
+		
+		
+	}
 }

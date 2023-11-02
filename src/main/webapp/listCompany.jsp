@@ -1,3 +1,4 @@
+<%@page import="es.jacaranda.model.User"%>
 <%@page import="es.jacaranda.model.CompanyProject"%>
 <%@page import="es.jacaranda.model.Employee"%>
 <%@page import="es.jacaranda.repository.DbRepository"%>
@@ -13,10 +14,18 @@
 </head>
 <body>
 <%
+	if(request.getParameter("closeSession")!=null){
+		session.invalidate();
+		response.sendRedirect("login.jsp");
+		return;
+				
+	}
 	if(session.getAttribute("user")==null){
-		response.sendRedirect("error.jsp?msg=Tienes que iniciar sesión ");
+		response.sendRedirect("error.jsp?msg=Tienes que iniciar sesion ");
 		return;
 	}
+
+User user = DbRepository.find(User.class,(String)session.getAttribute("user"));
 ArrayList<Company> result = null;
 	try{
 		
@@ -30,6 +39,9 @@ ArrayList<Company> result = null;
 <%
 	for (Company c : result){
 %>
+<form action="" method="post">
+	<button name="closeSession" type="submit">Cerrar session</button>
+</form>
 <table border="1px">
 
 	<tr>
@@ -64,6 +76,9 @@ ArrayList<Company> result = null;
 		for (Employee e : c.getEmployee()){
 		%>
 		<tr >
+		<%
+			if(user.getRole().equals("ADMIN")){
+		%>
 		<td colspan="1">
 			Empleado: <%=e.getFirstName()%> <%=e.getLastName() %>
 		</td>
@@ -73,6 +88,15 @@ ArrayList<Company> result = null;
 		<td>
 			<a href="deleteEmployee.jsp?idEmployee=<%=e.getId()%>"><button type="button">Eliminar</button></a>
 		</td>
+		<%
+			}else{
+		%>
+		<td colspan="3">
+			Empleado: <%=e.getFirstName()%> <%=e.getLastName() %>
+		</td>
+		<%
+			}
+		%>
 		</tr>
 		<%
 		}

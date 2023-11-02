@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Error: <%=request.getAttribute("msg") %></h1> 
+<%
+	String msg= request.getParameter("msg");
+%>
+	<h1>Error: <%=msg %></h1> 
 </body>
 </html>

@@ -9,6 +9,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+if(session.getAttribute("user")==null){
+		response.sendRedirect("error.jsp?msg=Tienes que iniciar sesion ");
+		return;
+	}
 	<%
 	if(request.getParameter("add")!=null){
 		
