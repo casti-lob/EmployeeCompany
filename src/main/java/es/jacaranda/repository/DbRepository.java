@@ -5,11 +5,30 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import es.jacaranda.model.CompanyProject;
 import es.jacaranda.utility.DbUtility;
 
 public class DbRepository {
 
 	public static <E> E find(Class <E>c, int id) throws Exception {
+		Transaction transaction = null;
+		Session session;
+		E result=null;
+		try {
+			session = DbUtility.getSessionFactory().openSession();
+			
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		
+		try {
+			result = session.find(c, id);
+		} catch (Exception e) {
+			throw new Exception("Error al obtener la entidad");
+		}
+		return result;
+	}
+	public static <E> E find(Class <E>c, String id) throws Exception {
 		Transaction transaction = null;
 		Session session;
 		E result=null;
@@ -59,7 +78,7 @@ public class DbRepository {
 			throw new Exception("Error en la base de datos");
 		}
 		try {
-			result=  (E) session.merge(element);
+			 session.merge(element);//persist para companyProject
 			transaction.commit();
 		} catch (Exception e) {
 			transaction.rollback();
@@ -68,6 +87,24 @@ public class DbRepository {
 		return (E) result;
 		
 	}
+	
+	public static CompanyProject find(CompanyProject cp) throws Exception {
+		Session session = null;
+		CompanyProject result = null;
+		try {
+			session = DbUtility.getSessionFactory().openSession();
+			
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		try {
+			result =  session.find(CompanyProject.class, cp);
+		} catch (Exception e) {
+			throw new Exception("Error al obtener la entidad");
+		}
+		return result;
+	}
+	
 	
 	public static <E> E delete(Class <E>c, Object element) throws Exception {
 		Transaction transaction = null;
