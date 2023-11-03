@@ -1,3 +1,4 @@
+<%@page import="es.jacaranda.model.Employee"%>
 <%@page import="es.jacaranda.model.User"%>
 <%@page import="es.jacaranda.repository.DbRepository"%>
 <%@page import="es.jacaranda.utility.DbUtility"%>
@@ -12,22 +13,22 @@
 <body>
 	<%
 		if(request.getParameter("login")!=null){
-			String user= null;
+			int user= -1;
 			String password= null;
 			try{
-				user= request.getParameter("user");
+				user= Integer.parseInt(request.getParameter("user"));
 				password= request.getParameter("password");
 				try{
-					User checkUser = DbRepository.find(User.class, user);
-					if(checkUser.getPassword().equals(password)){
-						session.setAttribute("user", user);
+					Employee employee = DbRepository.find(Employee.class, user);
+					if(employee.getPassword().equals(password)){
+						session.setAttribute("user",employee );
 						response.sendRedirect("listCompany.jsp");
 					}else{%>
 					<h1>Usuario o Password mal</h1>
 						<form action="" method="post">
 						<p>
 						
-							Usuario
+							ID Usuario
 							<input type="text" name="user" required="required"">
 						</p>
 						

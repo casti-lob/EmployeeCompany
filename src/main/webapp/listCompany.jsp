@@ -25,7 +25,7 @@
 		return;
 	}
 
-User user = DbRepository.find(User.class,(String)session.getAttribute("user"));
+Employee user = (Employee)session.getAttribute("user");
 ArrayList<Company> result = null;
 	try{
 		
@@ -39,7 +39,10 @@ ArrayList<Company> result = null;
 <%
 	for (Company c : result){
 %>
+<a href="addEmployeeCompany.jsp"><button name="closeSession" type="submit">Asignar Trabajo</button></a>
 <form action="" method="post">
+	
+
 	<button name="closeSession" type="submit">Cerrar session</button>
 </form>
 <table border="1px">

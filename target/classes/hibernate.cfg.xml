@@ -14,8 +14,9 @@
 	<mapping class="es.jacaranda.model.Employee"/>
 	<mapping class="es.jacaranda.model.Company"/>
 	<mapping class="es.jacaranda.model.Project"/>
-		<mapping class="es.jacaranda.model.CompanyProject"/>
-		<mapping class="es.jacaranda.model.User"/>
+	<mapping class="es.jacaranda.model.CompanyProject"/>
+	<mapping class="es.jacaranda.model.User"/>
+	<mapping class="es.jacaranda.model.EmployeeProject"/>
 	
 	
     </session-factory>
