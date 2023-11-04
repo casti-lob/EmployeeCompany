@@ -55,7 +55,7 @@ public class EmployeeProject {
 	}
 
 	public void setMinutes(int minutes) {
-		this.minutes = minutes;
+		this.minutes += minutes;
 	}
 
 	@Override

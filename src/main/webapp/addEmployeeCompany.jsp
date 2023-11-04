@@ -1,3 +1,7 @@
+<%@page import="es.jacaranda.model.EmployeeProject"%>
+<%@page import="java.util.Date"%>
+
+<%@page import="es.jacaranda.repository.DbRepository"%>
 <%@page import="es.jacaranda.model.CompanyProject"%>
 <%@page import="es.jacaranda.model.Employee"%>
 <%@page import="es.jacaranda.model.Project"%>
@@ -21,7 +25,44 @@
 		return;
 	}
 	Employee employee =(Employee) session.getAttribute("user");
-	if (request.getParameter("showWorks") != null) {
+	if(request.getParameter("End")!=null) {
+		int startTime = (int) session.getAttribute("startTime");
+		int timeEnd = (int)(new Date().getTime()/1000);
+		int totalTime = timeEnd - startTime;
+		Project project = (Project) session.getAttribute("project");
+		EmployeeProject employeeProject = new EmployeeProject(employee, project, totalTime);
+		EmployeeProject ep= DbRepository.find(employeeProject );
+		if(ep!=null){
+			ep.setMinutes(totalTime);
+			DbRepository.add(ep);
+		}else{
+			
+			DbRepository.add(employeeProject);
+			
+		}
+		
+		response.sendRedirect("listCompany.jsp");
+		return; 
+	}else if(request.getParameter("go")!=null){
+		int idCompany= Integer.parseInt(request.getParameter("project"));
+		Project project = DbRepository.find(Project.class, idCompany);
+		session.setAttribute("project", project);
+		
+		//Iniciamos el tiempo
+		//new Date es la fecha actual
+		//getTime obtenemos los milisegundos desde 1970 hasta ahora
+		// /1000 lo pasamos a minutos
+		// int lo convertimos a entero
+		int startTime = (int)(new Date().getTime()/1000);
+		session.setAttribute("startTime", startTime);
+	%>
+	<form action="" method="post">
+	<div class="d-grid gap-2">
+		<button class="btn btn-primary" name="End" type="submit">Parar tiempo</button>
+		</div>
+	</form>
+	
+	<%}else if (request.getParameter("showWorks") != null) {
 	%>
 	<form action="" method="post">
 	<select name="project" class="form-select" aria-label="select example"

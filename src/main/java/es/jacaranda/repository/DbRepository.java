@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import es.jacaranda.model.CompanyProject;
+import es.jacaranda.model.EmployeeProject;
 import es.jacaranda.utility.DbUtility;
 
 public class DbRepository {
@@ -105,8 +106,24 @@ public class DbRepository {
 		return result;
 	}
 	
+	public static EmployeeProject find(EmployeeProject ep) throws Exception {
+		Session session = null;
+		EmployeeProject result = null;
+		try {
+			session = DbUtility.getSessionFactory().openSession();
+			
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		try {
+			result =  session.find(EmployeeProject.class, ep);
+		} catch (Exception e) {
+			throw new Exception("Error al obtener la entidad");
+		}
+		return result;
+	}
 	
-	public static <E> E delete(Class <E>c, Object element) throws Exception {
+	public static <E> E delete( Object element) throws Exception {
 		Transaction transaction = null;
 		E result= null;
 		Session session = null;
@@ -142,6 +159,32 @@ public class DbRepository {
 				session.persist(c);
 			}else {
 				 session.merge(c);//persist para companyProject
+			}
+			
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		session.close();
+		
+		
+	}
+	
+	public static void add(EmployeeProject ep) throws Exception {
+		Transaction transaction = null;
+		
+		Session session = null;
+		try {
+			session = DbUtility.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		try {
+			if(DbRepository.find(ep)==null) {
+				session.persist(ep);
+			}else {
+				 session.merge(ep);
 			}
 			
 			transaction.commit();
