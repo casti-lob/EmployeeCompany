@@ -34,7 +34,7 @@
 		EmployeeProject ep= DbRepository.find(employeeProject );
 		if(ep!=null){
 			ep.setMinutes(totalTime);
-			DbRepository.add(ep);
+			DbRepository.update(ep);
 		}else{
 			
 			DbRepository.add(employeeProject);
@@ -68,9 +68,12 @@
 	<select name="project" class="form-select" aria-label="select example"
 		>
 		<option selected>Projectos</option>
-		<% for(CompanyProject cP : employee.getCompany().getCompanyProject()){ %>
+		<% for(CompanyProject cP : employee.getCompany().getCompanyProject()){ 
+			Date fechaActual = new Date();
+			if(cP.getEnd().after(fechaActual)){
+		%>
 		<option value="<%=cP.getProject().getId()%>"><%=cP.getProject().getName() %></option>
-		<%} %>
+		<%}} %>
 		
 	</select>
 	<div class="d-grid gap-2">

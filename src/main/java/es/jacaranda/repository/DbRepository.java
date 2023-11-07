@@ -181,11 +181,33 @@ public class DbRepository {
 			throw new Exception("Error en la base de datos");
 		}
 		try {
-			if(DbRepository.find(ep)==null) {
+			
 				session.persist(ep);
-			}else {
+			
+			transaction.commit();
+		} catch (Exception e) {
+			transaction.rollback();
+		}
+		session.close();
+		
+		
+	}
+	public static void update(EmployeeProject ep) throws Exception {
+		Transaction transaction = null;
+		
+		Session session = null;
+		try {
+			session = DbUtility.getSessionFactory().openSession();
+			transaction = session.beginTransaction();
+		} catch (Exception e) {
+			throw new Exception("Error en la base de datos");
+		}
+		try {
+			
+			
+			
 				 session.merge(ep);
-			}
+			
 			
 			transaction.commit();
 		} catch (Exception e) {
