@@ -48,7 +48,7 @@
 			session.setAttribute("workingProyect", workingProyect);
 
 		}
-	}
+	}//Temino el trabajo
 	if(request.getParameter("end")!=null){
 		int timeEnd = (int)(new Date().getTime()/1000);
 		int idProject = Integer.parseInt(request.getParameter("end"));
@@ -89,8 +89,9 @@
 				if (cP.getEnd().before(fechaActual)) {//Es after pero para no tener que cambiar la bbdd
 			%>
 			<tr>
-				<%
+				<%//Si hay proyectos en la session
 				if (workingProyect != null) {
+					//Miramos si esta trabajando o no
 				%>
 				<form>
 				<td><%=cP.getProject().getName()%></td>
@@ -104,7 +105,7 @@
 				</td>
 				<%} %>
 				</form>
-				<%
+				<%//Si no hay proyectos en la session
 				} else {
 				%>
 				<form>
@@ -124,7 +125,12 @@
 		</tbody>
 	</table>
 
-
+<div class="text-center">
+		<a href="listCompany.jsp"><button
+				class="btn btn-primary btn-lg btn btn-info" name="closeSession"
+				type="submit">Atras</button></a>
+		
+	</div>
 
 
 
