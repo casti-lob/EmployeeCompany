@@ -33,7 +33,7 @@
 	//Si mandamos el formulario
 	if (request.getParameter("start") != null) {
 		if (workingProyect != null) {
-			
+
 			//Iniciamos el tiempo
 			//new Date es la fecha actual
 			//getTime obtenemos los milisegundos desde 1970 hasta ahora
@@ -48,28 +48,28 @@
 			session.setAttribute("workingProyect", workingProyect);
 
 		}
-	}//Temino el trabajo
-	if(request.getParameter("end")!=null){
-		int timeEnd = (int)(new Date().getTime()/1000);
+	} //Temino el trabajo
+	if (request.getParameter("end") != null) {
+		int timeEnd = (int) (new Date().getTime() / 1000);
 		int idProject = Integer.parseInt(request.getParameter("end"));
 		int startTime = workingProyect.get(idProject);
 		workingProyect.remove(idProject);
 		int totalTime = timeEnd - startTime;
 		Project project = DbRepository.find(Project.class, idProject);
 		EmployeeProject employeeProject = new EmployeeProject(employee, project, totalTime);
-		
-		EmployeeProject ep= DbRepository.find(employeeProject );
-		if(ep!=null){
+
+		EmployeeProject ep = DbRepository.find(employeeProject);
+		if (ep != null) {
 			ep.setMinutes(totalTime);
 			DbRepository.update(ep);
-		}else{
-			
+		} else {
+
 			DbRepository.add(employeeProject);
-			
+
 		}
-		
+
 		response.sendRedirect("addEmployeeCompany.jsp");
-		return; 
+		return;
 	}
 	%>
 	<h1 class="display-2">Projectos en curso</h1>
@@ -89,23 +89,31 @@
 				if (cP.getEnd().before(fechaActual)) {//Es after pero para no tener que cambiar la bbdd
 			%>
 			<tr>
-				<%//Si hay proyectos en la session
+				<%
+				//Si hay proyectos en la session
 				if (workingProyect != null) {
 					//Miramos si esta trabajando o no
 				%>
 				<form>
-				<td><%=cP.getProject().getName()%></td>
-				<%if(workingProyect.get(cP.getProject().getId())==null){ %>
-				<td><button value="<%=cP.getProject().getId()%>" name="start"
-						type="submit" class="btn btn-success">Empezar a Trabajar</button>
-				</td>
-				<%}else{ %>
-				<td><button value="<%=cP.getProject().getId()%>" name="end"
-						type="submit" class="btn btn-danger">Terminar de Trabajar</button>
-				</td>
-				<%} %>
+					<td><%=cP.getProject().getName()%></td>
+					<%
+					if (workingProyect.get(cP.getProject().getId()) == null) {
+					%>
+					<td><button value="<%=cP.getProject().getId()%>" name="start"
+							type="submit" class="btn btn-success">Empezar a Trabajar</button>
+					</td>
+					<%
+					} else {
+					%>
+					<td><button value="<%=cP.getProject().getId()%>" name="end"
+							type="submit" class="btn btn-danger">Terminar de
+							Trabajar</button></td>
+					<%
+					}
+					%>
 				</form>
-				<%//Si no hay proyectos en la session
+				<%
+				//Si no hay proyectos en la session
 				} else {
 				%>
 				<form>
@@ -125,11 +133,11 @@
 		</tbody>
 	</table>
 
-<div class="text-center">
+	<div class="text-center">
 		<a href="listCompany.jsp"><button
 				class="btn btn-primary btn-lg btn btn-info" name="closeSession"
 				type="submit">Atras</button></a>
-		
+
 	</div>
 
 
@@ -220,5 +228,6 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
 		crossorigin="anonymous"></script>
+
 </body>
 </html>
