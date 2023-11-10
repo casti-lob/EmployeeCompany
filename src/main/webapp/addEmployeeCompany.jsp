@@ -23,7 +23,7 @@
 <body>
 
 	<%
-	//Comprobamos el login
+	 //Comprobamos el login
 	if (session.getAttribute("user") == null) {
 		response.sendRedirect("error.jsp?msg=Tienes que iniciar sesion ");
 		return;
@@ -140,6 +140,7 @@
 
 	</div>
 
+ 
 
 
 
@@ -149,8 +150,7 @@
 
 
 
-
-	<%-- <%
+	<%--  <%
 	if (session.getAttribute("user") == null) {
 		response.sendRedirect("error.jsp?msg=Tienes que iniciar sesion ");
 		return;
@@ -172,9 +172,11 @@
 			
 		}
 		
+		session.removeAttribute("project");
 		response.sendRedirect("listCompany.jsp");
 		return; 
-	}else if(request.getParameter("go")!=null){
+	}else if(request.getParameter("go")!=null || session.getAttribute("project")!=null ){
+		if(session.getAttribute("project")==null){
 		int idCompany= Integer.parseInt(request.getParameter("project"));
 		Project project = DbRepository.find(Project.class, idCompany);
 		session.setAttribute("project", project);
@@ -186,6 +188,7 @@
 		// int lo convertimos a entero
 		int startTime = (int)(new Date().getTime()/1000);
 		session.setAttribute("startTime", startTime);
+		}
 	%>
 	<form action="" method="post">
 	<div class="d-grid gap-2">
@@ -198,7 +201,7 @@
 	<form action="" method="post">
 	<select name="project" class="form-select" aria-label="select example"
 		>
-		<option selected>Projectos</option>
+		<option disabled="disabled" selected>Projectos</option>
 		<% for(CompanyProject cP : employee.getCompany().getCompanyProject()){ 
 			Date fechaActual = new Date();
 			if(cP.getEnd().before(fechaActual)){//Es after pero para no tener que cambiar la bbdd
@@ -222,8 +225,8 @@
 	</form>
 	<%
 	}
-	%> --%>
-
+	%>  --%>
+ 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
