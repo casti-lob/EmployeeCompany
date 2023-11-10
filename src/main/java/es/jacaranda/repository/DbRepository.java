@@ -123,9 +123,9 @@ public class DbRepository {
 		return result;
 	}
 	
-	public static <E> E delete( Object element) throws Exception {
+	public static Object delete ( Object element) throws Exception {
 		Transaction transaction = null;
-		E result= null;
+		Object result= null;
 		Session session = null;
 		try {
 			session = DbUtility.getSessionFactory().openSession();

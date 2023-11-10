@@ -35,7 +35,7 @@ if(session.getAttribute("user")==null){
 			response.sendRedirect("error.jsp?msg=El empleado no existe");
 			return;
 		}
-		DbRepository.delete( e);
+		DbRepository.delete(e);
 		
 		response.sendRedirect("listCompany.jsp");
 		
