@@ -56,6 +56,19 @@ public class Employee {
 		this.company = company;
 	}
 
+	public Employee( String firstName, String lastName, String email, String gender, Date dateOfBirth,
+			String password, String role, Company company) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.gender = gender;
+		this.dateOfBirth = dateOfBirth;
+		this.password = password;
+		this.role = role;
+		this.company = company;
+	}
+
 	public Employee() {
 		super();
 	}
