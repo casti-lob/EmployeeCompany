@@ -18,17 +18,17 @@
 	crossorigin="anonymous">
 
 <script>
-	function validatePassword() {
-		if (document.getElementById('password').value == document
-				.getElementById('passwordConfirm').value) {
-			document.getElementById('error').hidden = true;
-			document.getElementById('send').disabled = false;
-		} else {
+function validatePassword() {
+	if (document.getElementById('password').value == document
+			.getElementById('passwordConfirm').value) {
+		document.getElementById('error').hidden = true;
+		document.getElementById('send').disabled = false;
+	} else {
 
-			document.getElementById('error').hidden = false;
-			document.getElementById('send').disabled = true;
-		}
+		document.getElementById('error').hidden = false;
+		document.getElementById('send').disabled = true;
 	}
+}
 </script>
 </head>
 <body>
@@ -81,8 +81,7 @@
 			<label for="exampleInputPassword1" class="form-label">Confirma
 				Password</label> <input id="passwordConfirm" name="passwordConfirm"
 				type="password" class="form-control" onchange="validatePassword();">
-			<div  hidden="true" id="error" class="alert alert-danger" role="alert">A simple danger
-				alertâ€”check it out!</div>
+			<div  hidden="true" id="error" class="alert alert-danger" role="alert">La contraseña no coinciden</div>
 			
 		</div>
 		<div class="mb-3">
