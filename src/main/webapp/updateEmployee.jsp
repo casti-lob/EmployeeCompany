@@ -30,7 +30,7 @@
 		String lastName = null;
 		String email = null;
 		String gender = null;
-		
+		String password = null;
 		try {
 			idEmployee = Integer.parseInt(request.getParameter("idUpdateEmployee"));
 			e = DbRepository.find(Employee.class, idEmployee);
@@ -38,7 +38,7 @@
 			lastName = request.getParameter("lastName");
 			email = request.getParameter("email");
 			gender = request.getParameter("gender");
-			
+			password=request.getParameter("password");
 
 		} catch (Exception exct) {
 			response.sendRedirect("error.jsp?msg=Hay algun parametro en blanco");
