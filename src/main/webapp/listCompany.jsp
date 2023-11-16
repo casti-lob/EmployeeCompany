@@ -100,10 +100,16 @@
 		</form>
 		<%
 		}
+		if (user.getRole().equals("USER")) {
 		%>
+		<a href="updateEmployee.jsp?updateMyUser=true"><button class="btn btn-primary btn-lg btn btn-secondary"
+				name="closeSession" type="button">Modificar Usuario</button></a>
+		
+	
+	<%} %>
 	</div>
-
 	<%
+		
 	for (Company c : result) {
 	%>
 
