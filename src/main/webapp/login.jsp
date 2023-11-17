@@ -18,6 +18,7 @@
 	crossorigin="anonymous">
 <body>
 	<%
+	
 	if (request.getParameter("login") != null) {
 		int user = -1;
 		String password = null;
@@ -79,10 +80,10 @@
 	} else {
 	%>
 	<div class="text-center">
-
+		
 		<form action="" method="post">
 
-
+			
 			<div class="row g-3 align-items-center">
 				<div class="col-auto">
 					<label for="exampleFormControlInput1" class="col-form-label">Id

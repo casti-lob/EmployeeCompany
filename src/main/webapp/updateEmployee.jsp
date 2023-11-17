@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.codec.digest.DigestUtils"%>
 <%@page import="java.sql.Date"%>
 <%@page import="es.jacaranda.model.Company"%>
 <%@page import="java.util.ArrayList"%>
@@ -18,19 +19,21 @@
 </head>
 <body>
 	<%
+	
 	Employee e = null;
 	ArrayList<Company> company = null;
 	if (session.getAttribute("user") == null) {
 		response.sendRedirect("error.jsp?msg=Tienes que iniciar sesion ");
 		return;
 	}
-	if (request.getParameter("add") != null ) {
+	if (request.getParameter("add") != null && request.getParameter("password")==null ) {
 		String name = null;
 		int idEmployee = -1;
 		String lastName = null;
 		String email = null;
 		String gender = null;
 		String password = null;
+		
 		try {
 			idEmployee = Integer.parseInt(request.getParameter("idUpdateEmployee"));
 			e = DbRepository.find(Employee.class, idEmployee);
@@ -38,7 +41,8 @@
 			lastName = request.getParameter("lastName");
 			email = request.getParameter("email");
 			gender = request.getParameter("gender");
-			password=request.getParameter("password");
+			password =request.getParameter("password");
+			
 
 		} catch (Exception exct) {
 			response.sendRedirect("error.jsp?msg=Hay algun parametro en blanco");
@@ -58,12 +62,12 @@
 
 		response.sendRedirect("listCompany.jsp");
 		return;
-	} else if (request.getParameter("updateMyUser") != null) {
+	}  if (request.getParameter("updateMyUser") != null) {
 		Employee user = (Employee) session.getAttribute("user");
 		e = DbRepository.find(Employee.class, user.getId());
 		company = (ArrayList<Company>) DbRepository.findAll(Company.class);
 
-	} else if (request.getParameter("add") != null && request.getParameter("password") != null) {
+	}  if (request.getParameter("add") != null && request.getParameter("password") != null) {
 		String name = null;
 		int idEmployee = -1;
 		String lastName = null;
@@ -78,7 +82,7 @@
 			lastName = request.getParameter("lastName");
 			email = request.getParameter("email");
 			gender = request.getParameter("gender");
-			password = request.getParameter("password");
+			password = DigestUtils.md5Hex(request.getParameter("password"));
 
 		} catch (Exception exct) {
 			response.sendRedirect("error.jsp?msg=Hay algun parametro en blanco");
@@ -110,7 +114,7 @@
 	<%
 	return;
 	}else if(request.getParameter("updatePassword")!=null){
-		String oldPassword = request.getParameter("password");
+		String oldPassword =DigestUtils.md5Hex(request.getParameter("password"));
 		Employee user = (Employee) session.getAttribute("user");
 		if(user.getPassword().equals(oldPassword)){
 			Employee updateEmployee =(Employee) session.getAttribute("newUser");
@@ -136,7 +140,7 @@
 
 	}
 	%>
-	<form method="post">
+	<form method="post" action="updateEmployee.jsp">
 		<div class="mb-3">
 			<label for="exampleInputEmail1" class="form-label">Id </label> <input
 				class="form-control" readonly="readonly" value="<%=e.getId()%>"
@@ -226,7 +230,7 @@
 			</select>
 		</div>
 
-		<button class="btn btn-primary" name="add" type="submit">Añadir</button>
+		<button class="btn btn-primary" name="add" value="add" type="submit">Añadir</button>
 	</form>
 
 	<script
